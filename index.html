@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Code Hacking Hunt</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f9;
+      text-align: center;
+      padding: 20px;
+      margin: 0;
+    }
+    h1 {
+      color: #333;
+    }
+    .level {
+      margin: 20px auto;
+      display: none;
+    }
+    .visible {
+      display: block;
+    }
+    button {
+      background-color: #007BFF;
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 16px;
+      margin-top: 20px;
+    }
+    button:hover {
+      background-color: #0056b3;
+    }
+    .hint {
+      color: red;
+      margin-top: 20px;
+    }
+    #timer {
+      font-size: 18px;
+      margin-top: 15px;
+      color: red;
+    }
+  </style>
+</head>
+<body>
+  <h1>Code Hacking Hunt</h1>
+  <p>Welcome to the ultimate Code Hacking Hunt! Solve puzzles to unlock the next levels. Good luck!</p>
+  <p id="timer"></p>
+  
+  <!-- Level 1 -->
+  <div id="level1" class="level visible">
+    <h2>Level 1: Find the Hidden Number</h2>
+    <p>What is the sum of 20 + 10?</p>
+    <input type="number" id="level1Answer" placeholder="Enter your answer here">
+    <button onclick="checkLevel1()">Submit Answer</button>
+    <p class="hint" id="level1Hint"></p>
+  </div>
+  
+  <!-- Level 2 -->
+  <div id="level2" class="level">
+    <h2>Level 2: Solve the Riddle</h2>
+    <p>I’m tall when I’m young, and I’m short when I’m old. What am I?</p>
+    <input type="text" id="level2Answer" placeholder="Enter your answer here">
+    <button onclick="checkLevel2()">Submit Answer</button>
+    <p class="hint" id="level2Hint"></p>
+  </div>
+  
+  <!-- Level 3 -->
+  <div id="level3" class="level">
+    <h2>Level 3: Word Puzzle</h2>
+    <p>Unscramble this word: <strong>"TCAKRAH"</strong></p>
+    <p>(Hint: It’s related to coding)</p>
+    <input type="text" id="level3Answer" placeholder="Enter your answer here">
+    <button onclick="checkLevel3()">Submit Answer</button>
+    <p class="hint" id="level3Hint"></p>
+  </div>
+
+  <!-- Victory Screen -->
+  <div id="victory" class="level">
+    <h2>🎉 Congratulations! 🎉</h2>
+    <p>You’ve completed all levels of the Code Hacking Hunt!</p>
+  </div>
+
+  <script>
+    // Timer (5 minutes for the game)
+    let timer = 300; // 5 minutes in seconds
+    const timerElement = document.getElementById("timer");
+    const interval = setInterval(() => {
+      let minutes = Math.floor(timer / 60);
+      let seconds = timer % 60;
+      timerElement.textContent = `Time Left: ${minutes}:${seconds < 10 ? "0" + seconds : seconds}`;
+      timer--;
+      if (timer < 0) {
+        clearInterval(interval);
+        alert("Time's up! You lost the game.");
+        window.location.reload(); // Restart the game
+      }
+    }, 1000);
+
+    // Common helper to reset hints
+    function resetHint(levelHint) {
+      document.getElementById(levelHint).textContent = ""; // Clear the hint
+    }
+
+    // Level 1 Logic
+    function checkLevel1() {
+      const answer = document.getElementById("level1Answer").value.trim();
+      const hint = document.getElementById("level1Hint");
+      resetHint("level1Hint"); // Reset hint before showing a new one
+      if (answer === "30") {
+        alert("Correct! Proceeding to Level 2.");
+        document.getElementById("level1").classList.remove("visible");
+        document.getElementById("level2").classList.add("visible");
+      } else {
+        hint.textContent = "Incorrect! Try again.";
+      }
+    }
+
+    // Level 2 Logic
+    function checkLevel2() {
+      const answer = document.getElementById("level2Answer").value.trim().toLowerCase();
+      const hint = document.getElementById("level2Hint");
+      resetHint("level2Hint"); // Reset hint before showing a new one
+      if (answer === "candle") {
+        alert("Correct! Proceeding to Level 3.");
+        document.getElementById("level2").classList.remove("visible");
+        document.getElementById("level3").classList.add("visible");
+      } else {
+        hint.textContent = "Incorrect! Hint: It melts as it works.";
+      }
+    }
+
+    // Level 3 Logic
+    function checkLevel3() {
+      const answer = document.getElementById("level3Answer").value.trim().toLowerCase();
+      const hint = document.getElementById("level3Hint");
+      resetHint("level3Hint"); // Reset hint before showing a new one
+      if (answer === "hackrat") {
+        alert("Congratulations! You've completed all levels.");
+        document.getElementById("level3").classList.remove("visible");
+        document.getElementById("victory").classList.add("visible");
+        clearInterval(interval); // Stop the timer
+      } else {
+        hint.textContent = "Incorrect! Hint: Think about coding skills.";
+      }
+    }
+  </script>
+</body>
+</html>
